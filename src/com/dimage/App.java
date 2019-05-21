@@ -11,6 +11,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 
 public class App {
 	private final static PrintWriter OUT, ERR;
@@ -42,9 +43,16 @@ public class App {
 			
 			BYTES = new byte[IMAGE_SEGMENT_BASE_NUM][IMAGE_SEGMENT_BASE_NUM][];
 			
-			App.pr("Enter image path (absolute): ");
+			// Following block creates a file chooser dialog
+			{
+				JFileChooser fileChooser = new JFileChooser("/home/sschakraborty/Pictures");
+				fileChooser.showOpenDialog(null);
+				tempPath = fileChooser.getSelectedFile().getAbsolutePath();
+			}
+			
+			App.pr("Raster path: ");
+			App.prln(tempPath);
 			App.flush();
-			tempPath = IN.readLine();
 		} catch(IOException e) {
 			App.errln("Error while reading master image path!");
 			App.flushErr();
